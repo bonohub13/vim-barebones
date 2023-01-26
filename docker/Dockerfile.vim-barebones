@@ -1,0 +1,26 @@
+FROM debian:buster-slim
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y \
+    apt-utils \
+    vim
+
+# プラグイン依存パッケージインストール
+RUN apt-get install -y \
+    curl \
+    git \
+    universal-ctags
+
+RUN useradd -m -s /bin/bash -d /home/vimuser vimuser
+USER vimuser
+
+# ここ以降は必ず最後に実行
+ADD vim-barebones /home/vimuser/vim-barebones
+WORKDIR /home/vimuser/vim-barebones
+RUN ./install.sh
+
+WORKDIR /home/vimuser
+USER root
+RUN rm -rf /home/vimuser/vim-barebones
+
+USER vimuser

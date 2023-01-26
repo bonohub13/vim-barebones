@@ -1,0 +1,67 @@
+filetype plugin indent on
+
+" 色の設定
+syntax enable
+colorscheme desert
+highlight Normal    guibg=NONE ctermbg=NONE
+highlight NonText   guibg=NONE ctermbg=NONE
+set termguicolors
+
+" インデント
+set autoindent
+set smartindent
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+
+" 文字エンコーディング
+set encoding=utf-8
+" set ambiwidth=double          " 全角文字を正しく表示させたい場合、
+                                " コメントアウトを解除
+
+" 補完関連
+set nocompatible
+
+" バックアップ/スワップファイル作成
+set nobackup
+set noswapfile
+
+" 行数表示
+set number
+set cursorline
+" set relativenumber            " カーソルが置いてある行から相対的な行数を
+                                " 表示させたい場合、コメントアウトを解除
+
+" その他
+set backspace=indent,eol,start  " 挿入モードでバックスペース削除を有効化
+set showmatch
+set mouse=a                     " エディタ内でマウスを使用可能にする
+                                " (ただしコピペをする際にはmouse=に設定する必要あり)
+set nohlsearch                  " 検索結果のハイライトを無効化
+set incsearch                   " 検索ワードの最初の文字入力時に検索開始
+set ignorecase                  " コマンドモード、キーワード検索する際に
+                                " 大文字・小文字を無視
+set smartcase                   " 検索内容に大文字が含まれている場合、
+                                " ignorecaseを無視して大文字を優先させる
+set wildignorecase
+set colorcolumn=80              " 半角80文字の列に線を表示
+set path=.,/usr/include/,**
+set wildmenu                    " コマンドモード時に入力内容からコマンドをタブ補完
+
+" <Leader>キーのマッピング
+let g:mapleader=" "             " スペースキーを<Leader>キーとしてマッピング
+                                " しているが、好きなものへ再マッピングしてもOK!
+                                " しかし、アルファベットや:,/,?等の
+                                " ノーマルモード時に使用するものは禁止
+
+" プラグインインストール (ここは必ず.vimrcファイル内になければならない)
+" プラグインがロードされない
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+    Plug 'preservim/tagbar'
+call plug#end()
+
+" カスタムコマンド一覧: ~/.vim/after/plugin/commands.vim
+" 自動実行コマンド一覧: ~/.vim/after/plugin/autocommands.vim
+" 各種キーバインド一覧: ~/.vim/after/plugin/keybinds.vim

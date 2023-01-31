@@ -1,25 +1,38 @@
 FROM debian:buster-slim
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y \
+RUN apt update && apt upgrade -y
+RUN apt install -y \
     apt-utils \
-    vim
+    vim \
+    sudo
 
 # プラグイン依存パッケージインストール
-RUN apt-get install -y \
+RUN apt install -y \
     curl \
     git \
     universal-ctags
 
+# C/C++のLSPを使うためのもの (必須ではない)
+RUN apt install -y \
+    clangd-11
+
+# vimscriptのLSPを使うためのもの (必須ではない)
+RUN apt install -y \
+    cargo \
+    npm
+
 RUN useradd -m -s /bin/bash -d /home/vimuser vimuser
+RUN echo "vimuser:vim" | chpasswd
+RUN adduser vimuser sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER vimuser
 
 # ここ以降は必ず最後に実行
 ADD vim-barebones /home/vimuser/vim-barebones
 WORKDIR /home/vimuser/vim-barebones
 RUN ./install.sh
-
 WORKDIR /home/vimuser
+
 USER root
 RUN rm -rf /home/vimuser/vim-barebones
 

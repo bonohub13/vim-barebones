@@ -1,7 +1,9 @@
-SHELL = /bin/bash
-DOCKER_IMAGE_NAME := vim-barebones
-BRANCH := $(shell date +'%Y%m%d')
-USE_BRANCH := 20230125
+SHELL=/bin/bash
+DOCKER_IMAGE_NAME=vim-barebones
+BRANCH=$(shell date +'%Y%m%d')
+USE_BRANCH=20230131
+ENTRYPOINT=entrypoint.sh
+ENTRYPOINT_BASE=entrypoint_base.sh
 
 all:
 
@@ -22,3 +24,6 @@ run: build-image
 
 release:
 	tar czvf vim-barebones-$(shell date +'%Y%m%d').tar.gz vim-barebones
+
+extract:
+	tar czvf /tmp/vim-barebones-dev.tar.gz .

@@ -10,6 +10,60 @@ finished_install_msg() {
     echo "$1インストール完了"
 }
 
+install_ctags() {
+    universal_ctags_compat=0
+
+    if command -v ctags > /dev/null
+    then
+        universal_ctags_compat=2
+        installed_msg "ctags"
+    elif grep -q "Debian" /etc/os-release
+    then
+        # Debianである
+        if [ `grep "VERSION_ID" /etc/os-release | sed -e "s/.*=//" -e 's/"//g'` -ge 10 ]
+        then
+            # Buster以降である
+            universal_ctags_compat=1
+        fi
+    elif [ -f /etc/lsb_release ]
+    then
+        # Ubuntu派生である
+        if [ `grep "Release" /etc/lsb_release | awk '{print$2}' | sed "s/\.*//"` -ge 20 ]
+        then
+            # リリースが20.04 (Focal) 以降である
+            universal_ctags_compat=1
+        fi
+    fi
+
+    case ${universal_ctags_compat} in
+        0)
+            [ "${HOME}" = "/root" ] \
+                && apt install -y exuberant-ctags \
+                || sudo apt install -y exuberant-ctags
+            finished_install_msg "ctags"
+            ;;
+        1)
+            [ "${HOME}" = "/root" ] \
+                && apt install -y universal-ctags \
+                || sudo apt install -y universal-ctags
+            finished_install_msg "ctags"
+            ;;
+        *)
+            ;;
+    esac
+
+
+    return $?
+}
+
+plugins() {
+    echo "${BAR}===============================${BAR}"
+    echo "== ERROR: この機能はまだ実装されていません =="
+    echo "${BAR}===============================${BAR}"
+
+    return $?
+}
+
 echo "${BAR}===============================${BAR}"
 echo "${BAR} vim-barebonesインストール開始 ${BAR}"
 echo "${BAR}===============================${BAR}"
@@ -60,40 +114,7 @@ fi
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-if command -v ctags > /dev/null
-then
-    installed_msg "ctags"
-else
-    universal_ctags_compat=0
-
-    if grep -q "Debian" /etc/os-release # Debianである
-    then
-        if [ `grep "VERSION_ID" /etc/os-release | sed -e "s/.*=//" -e 's/"//g'` -ge 10 ] # Buster以降である
-        then
-            universal_ctags_compat=1
-        fi
-    fi
-    if [ -f /etc/lsb_release ] # Ubuntu派生である
-    then
-        if [ `grep "Release" /etc/lsb_release | awk '{print$2}' | sed "s/\.*//"` -ge 20 ] # リリースが20.04 (Focal) 以降である
-        then
-            universal_ctags_compat=1
-        fi
-    fi
-
-    if [ ${universal_ctags_compat} -gt 0 ]
-    then
-        [ "${HOME}" = "/root" ] \
-            && apt install -y universal-ctags \
-            || sudo apt install -y universal-ctags
-    else
-        [ "${HOME}" = "/root" ] \
-            && apt install -y exuberant-ctags \
-            || sudo apt install -y exuberant-ctags
-    fi
-
-    finished_install_msg "ctags"
-fi
+install_ctags
 
 # 完了メッセージ
 echo "${BAR}===============================${BAR}"

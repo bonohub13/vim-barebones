@@ -30,7 +30,8 @@ Dockerfileに依存ソフトウェアを追加し、更新すること。 \
     ``` bash
     cd vim-barebones && ./install.sh
     ```
-    - また、サードパーティ製プラグインを使用したい場合以下のコマンドを実行する。
+    - また、サードパーティ製プラグインを使用したい場合以下のコマンドを実行する。 \
+    (まだない)
         ``` bash
         cd vim-barebones && ./install.sh plugins
         ```

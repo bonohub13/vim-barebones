@@ -1,7 +1,7 @@
 "   プラグイン自動アップデート
 augroup AutoupdatePlugins
     autocmd!
-    autocmd BufWritePost *vimrc nested :PlugUpdate
+    autocmd BufWritePost, *vimrc nested :PlugUpdate
 augroup END
 
 " tagbar用設定

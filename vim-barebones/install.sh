@@ -25,10 +25,10 @@ install_ctags() {
             # Buster以降である
             universal_ctags_compat=1
         fi
-    elif [ -f /etc/lsb_release ]
+    elif [ -f /etc/lsb-release ]
     then
         # Ubuntu派生である
-        if [ `grep "Release" /etc/lsb_release | awk '{print$2}' | sed "s/\.*//"` -ge 20 ]
+        if [ `grep "RELEASE" /etc/lsb-release | awk -F= '{print$2}' | sed "s/\..*//"` -ge 20 ]
         then
             # リリースが20.04 (Focal) 以降である
             universal_ctags_compat=1
@@ -110,9 +110,35 @@ else
     finished_install_msg "git"
 fi
 
-# vim-plugインストール
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if command -v fzf > /dev/null
+then
+    installed_msg "fzf"
+else
+    [ "${HOME}" = "/root" ] \
+        && apt install -y fzf \
+        || sudo apt install -y fzf
+
+if command -v cargo > /dev/null
+then
+    installed_msg "cargo"
+else
+    [ "${HOME}" = "/root" ] \
+        && apt isntall -y cargo \
+        || sudo apt install -y cargo
+
+    finished_install_msg "cargo"
+fi
+
+if command -v npm > /dev/null
+then
+    installed_msg "npm"
+else
+    [ "${HOME}" = "/root" ] \
+        && apt isntall -y npm \
+        || sudo apt install -y npm
+
+    finished_install_msg "npm"
+fi
 
 install_ctags
 

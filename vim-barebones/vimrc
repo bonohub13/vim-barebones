@@ -1,9 +1,17 @@
 " 色の設定
 syntax enable
 colorscheme desert
-" highlight Normal    guibg=NONE ctermbg=NONE
-" highlight NonText   guibg=NONE ctermbg=NONE
+highlight Normal    guibg=NONE ctermbg=NONE
+highlight NonText   guibg=NONE ctermbg=NONE
 set termguicolors
+
+" カーソルの表示
+"   SI = 挿入モード
+"   SR = 置き換えモード
+"   EI = ノーマルモード
+let &t_SI.="\e[1 q"
+let &t_SR.="\e[3 q"
+let &t_EI.="\e[2 q"
 
 " インデント
 set autoindent
@@ -47,13 +55,32 @@ set wildignorecase
 set colorcolumn=80              " 半角80文字の列に線を表示
 set path=.,/usr/include/,**
 set wildmenu                    " コマンドモード時に入力内容からコマンドをタブ補完
+set showcmd                     " 入力中のコマンドを表示
+set title                       " タイトルの追加
+set backspace=indent,eol,start  " 挿入モードでbackspaceを使って削除を可能に
+set list
+set listchars=tab:\|-,space:_
 
 " <Leader>キーのマッピング
-let g:mapleader=" "             " スペースキーを<Leader>キーとしてマッピング
+let mapleader=' '             " スペースキーを<Leader>キーとしてマッピング
                                 " しているが、好きなものへ再マッピングしてもOK!
                                 " しかし、アルファベットや:,/,?等の
                                 " ノーマルモード時に使用するものは禁止
 
+" プラグインマネジャの自動ダウンロード
+"   ダウンロード先のパス
+let plug_path=has('nvim') ? stdpath('data') . '/autoload/plug.vim'
+    \ : $HOME . '/.vim/autoload/plug.vim'
+echo plug_path
+"   ファイルが存在しない場合、ダウンロードする
+if empty(glob(plug_path))
+    call system(
+        \ 'curl' . 
+        \ ' -fLo ' . plug_path .
+        \ ' --create-dirs' . 
+        \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        \ )
+endif
 " プラグインインストール (ここは必ず.vimrcファイル内になければならない)
 " プラグインがロードされない
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plugged')
@@ -67,6 +94,14 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plug
     " 自動補完機能
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+    " ステータスバーに表示する情報追加
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    " ファジーファインダー (fzf)
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " PlugInstallコマンド実行していない環境下での初期動作

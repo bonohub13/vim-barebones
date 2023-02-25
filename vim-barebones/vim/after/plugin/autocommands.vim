@@ -10,3 +10,9 @@ augroup MarkupLang
     autocmd!
     autocmd FileType lua,vim,html,xml inoremap <buffer> < <><left>
 augroup END
+
+"   言語を日本語に設定
+augroup LangJapanese
+    autocmd!
+    autocmd VimEnter language 'ja_JP.UTF-8'
+augroup END

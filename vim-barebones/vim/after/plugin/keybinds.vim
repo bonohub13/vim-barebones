@@ -1,6 +1,6 @@
-" 各種キーバインド一覧
-" <モード>noremap   <入力キー>  <実行する内容><CR>
-"   ノーマルモードキーバインド一覧
+" Keybinds
+" <mode>noremap   <key>  <command><CR>
+"   Keybinds for normal mode
 nnoremap qq             :q!<CR>
 nnoremap qa             :qa!<CR>
 nnoremap <Leader>bn     :bnext<CR>
@@ -12,12 +12,12 @@ nnoremap <Leader>st     :term<CR>
 nnoremap <Leader>vt     :vert term<CR>
 nnoremap <Leader>ff     :FZF<CR>
 
-"   挿入モードキーバインド一覧
+"   Keybinds for insert mode
 inoremap [              []<left>
 inoremap (              ()<left>
 inoremap {              {}<left>
 inoremap "              ""<left>
 inoremap '              ''<left>
 
-"   ターミナルモードキーバインド一覧
+"   Keybinds for terminal mode
 tnoremap <ESC>          <C-\><C-n>

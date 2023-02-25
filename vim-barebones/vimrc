@@ -1,19 +1,32 @@
-" 色の設定
+" File tree for vim config files
+"
+" vim
+" └── after
+"     └── plugin
+"         ├── airline.vim
+"         ├── asyncomplete.vim
+"         ├── autocommands.vim
+"         ├── commands.vim
+"         ├── keybinds.vim
+"         ├── plugins.vim
+"         └── vim_lsp.vim
+
+" Color settings
 syntax enable
 colorscheme desert
 highlight Normal    guibg=NONE ctermbg=NONE
 highlight NonText   guibg=NONE ctermbg=NONE
 set termguicolors
 
-" カーソルの表示
-"   SI = 挿入モード
-"   SR = 置き換えモード
-"   EI = ノーマルモード
+" Cursor visualization
+"   SI = Insert mode
+"   SR = Substitution mode
+"   EI = Normal mode
 let &t_SI.="\e[1 q"
 let &t_SR.="\e[3 q"
 let &t_EI.="\e[2 q"
 
-" インデント
+" Indent related
 set autoindent
 set smartindent
 set tabstop=4
@@ -22,57 +35,50 @@ set shiftwidth=4
 set expandtab
 set smarttab
 
-" 文字エンコーディング
+" Encoding
 set encoding=utf-8
-" set ambiwidth=double          " 全角文字を正しく表示させたい場合、
-                                " コメントアウトを解除
+" set ambiwidth=double          " If you want to correctly show double spaced
+                                " characters, cancel the comment
 
-" 補完関連
+" autocompletion related
 set nocompatible
 
-" バックアップ/スワップファイル作成
+" disable backup/swapfile creation
 set nobackup
 set noswapfile
 
-" 行数表示
+" show line numbers
 set number
 set cursorline
-" set relativenumber            " カーソルが置いてある行から相対的な行数を
-                                " 表示させたい場合、コメントアウトを解除
+" set relativenumber            " If you want relative line numbers, cancel
+                                " the comment
 
-" その他
-set backspace=indent,eol,start  " 挿入モードでバックスペース削除を有効化
+" Etc
+set backspace=indent,eol,start  " Enable backspace in insert mode
 set showmatch
-set mouse=a                     " エディタ内でマウスを使用可能にする
-                                " (ただしコピペをする際にはmouse=に設定する必要あり)
-set nohlsearch                  " 検索結果のハイライトを無効化
-set incsearch                   " 検索ワードの最初の文字入力時に検索開始
-set ignorecase                  " コマンドモード、キーワード検索する際に
-                                " 大文字・小文字を無視
-set smartcase                   " 検索内容に大文字が含まれている場合、
-                                " ignorecaseを無視して大文字を優先させる
+set mouse=a                     " Enable mouse inside of vim
+set nohlsearch                  " Disable highlight on search
+set incsearch                   " Start search when typing keywords
+set ignorecase                  " Ignore case in command and search mode
+set smartcase                   " If there is upper case inside of command or search,
+                                " ignore the ignorecase option
 set wildignorecase
-set colorcolumn=80              " 半角80文字の列に線を表示
+set colorcolumn=80              " Show line at 80th character
 set path=.,/usr/include/,**
-set wildmenu                    " コマンドモード時に入力内容からコマンドをタブ補完
-set showcmd                     " 入力中のコマンドを表示
-set title                       " タイトルの追加
-set backspace=indent,eol,start  " 挿入モードでbackspaceを使って削除を可能に
+set wildmenu                    " Enable tab completion inside command mode
+set showcmd                     " Show command when typing
+set title                       " Show title
 set list
-set listchars=tab:\|-,space:_
+set listchars=tab:\|-,space:_   " Visualize tabs and spaces
 
-" <Leader>キーのマッピング
-let mapleader=' '             " スペースキーを<Leader>キーとしてマッピング
-                                " しているが、好きなものへ再マッピングしてもOK!
-                                " しかし、アルファベットや:,/,?等の
-                                " ノーマルモード時に使用するものは禁止
+" <Leader> key mapping
+let mapleader=' '               " By default, <Leader> key is mapped to space
 
-" プラグインマネジャの自動ダウンロード
-"   ダウンロード先のパス
+" Automatic installation of plugin manager (vim-plug)
 let plug_path=has('nvim') ? stdpath('data') . '/autoload/plug.vim'
     \ : $HOME . '/.vim/autoload/plug.vim'
 echo plug_path
-"   ファイルが存在しない場合、ダウンロードする
+"   If vim-plug doesn't exist, download vim-plug
 if empty(glob(plug_path))
     call system(
         \ 'curl' . 
@@ -81,31 +87,30 @@ if empty(glob(plug_path))
         \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         \ )
 endif
-" プラグインインストール (ここは必ず.vimrcファイル内になければならない)
-" プラグインがロードされない
+" Plugin installation (Plugin installation must be inside of .vimrc)
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plugged')
-    " Tagbar (変数・関数・クラスオブジェクト等の表示)
+    " Tagbar (list variables, functions, classes and etc.)
     Plug 'preservim/tagbar'
 
     " LSP
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings'
 
-    " 自動補完機能
+    " code completion
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-    " ステータスバーに表示する情報追加
+    " status bar to show additional information
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    " ファジーファインダー (fzf)
+    " Fuzzy finder (fzf)
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 call plug#end()
 
-" PlugInstallコマンド実行していない環境下での初期動作
-"   PlugInstallコマンドを実行し、プラグインをインストールする
+" Initial autorun for PlugInstall
+"   Run PlugInstall to install plugins automatically
 function! s:plug_install_on_initial_launch()
     let dir=has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plugged'
 
@@ -115,7 +120,3 @@ function! s:plug_install_on_initial_launch()
 endfunction
 
 call s:plug_install_on_initial_launch()
-
-" カスタムコマンド一覧: ~/.vim/after/plugin/commands.vim
-" 自動実行コマンド一覧: ~/.vim/after/plugin/autocommands.vim
-" 各種キーバインド一覧: ~/.vim/after/plugin/keybinds.vim

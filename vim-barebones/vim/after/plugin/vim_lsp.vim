@@ -1,8 +1,8 @@
-" LSP (言語サーバプロトコル) の有効化
-"   引数:
-"       lspname: LSPの名前
-"       language: 言語 (プログラミング言語)
-"       cmd: LSPを行うソフトウェア (ほとんどの場合、lspnameと同じ)
+" Enable LSP (Language Server Protocol)
+"   variables:
+"       lspname: Name of LSP
+"       language: List of programming languages
+"       cmd: Command to run (Most of the time, it is same as lspname)
 function! EnableLSP(lspname, languanges, cmd)
     if executable(a:lspname)
         au User lsp_setup call lsp#register_server({
@@ -13,7 +13,7 @@ function! EnableLSP(lspname, languanges, cmd)
     endif
 endfunction
 
-" LSPが有効化されたあとに実行されるコマンド一覧
+" Commands to run after the initialization of LSP
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
@@ -37,12 +37,12 @@ function! s:on_lsp_buffer_enabled() abort
 
 endfunction
 
-" スコープに含まれる内容を折りたたむ
+" Fold code based on scopes
 set foldmethod=expr
     \ foldexpr=lsp#ui#vim#folding#foldexpr()
     \ foldtext=lsp#ui#vim#folding#foldtext()
 
-"   Debian Busterでclangdを使いたい場合
+"   Setup for clangd on Debian Buster
 " let g:lsp_settings = {
 "     \   'clangd': {'cmd': ['clangd-11']},
 "     \ }

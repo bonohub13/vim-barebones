@@ -3,11 +3,11 @@
 BAR="`printf '=%.0s' {1..10}`"
 
 installed_msg() {
-    echo "$1インストール済"
+    echo "Already installed: $1"
 }
 
 finished_install_msg() {
-    echo "$1インストール完了"
+    echo "Installation complete: $1"
 }
 
 install_ctags() {
@@ -19,18 +19,18 @@ install_ctags() {
         installed_msg "ctags"
     elif grep -q "Debian" /etc/os-release
     then
-        # Debianである
+        # Debian
         if [ `grep "VERSION_ID" /etc/os-release | sed -e "s/.*=//" -e 's/"//g'` -ge 10 ]
         then
-            # Buster以降である
+            # Buster and later
             universal_ctags_compat=1
         fi
     elif [ -f /etc/lsb-release ]
     then
-        # Ubuntu派生である
+        # Ubuntu and its derivitives
         if [ `grep "RELEASE" /etc/lsb-release | awk -F= '{print$2}' | sed "s/\..*//"` -ge 20 ]
         then
-            # リリースが20.04 (Focal) 以降である
+            # 20.04 (Focal) and later
             universal_ctags_compat=1
         fi
     fi
@@ -57,16 +57,16 @@ install_ctags() {
 }
 
 plugins() {
-    echo "${BAR}===============================${BAR}"
-    echo "== ERROR: この機能はまだ実装されていません =="
-    echo "${BAR}===============================${BAR}"
+    echo "${BAR}=========================${BAR}"
+    echo "${BAR} ERROR: Function missing ${BAR}"
+    echo "${BAR}=========================${BAR}"
 
     return $?
 }
 
-echo "${BAR}===============================${BAR}"
-echo "${BAR} vim-barebonesインストール開始 ${BAR}"
-echo "${BAR}===============================${BAR}"
+echo "${BAR}==================================${BAR}"
+echo "${BAR} vim-barebones installation start ${BAR}"
+echo "${BAR}==================================${BAR}"
 
 if [ $# -gt 0 ] && echo "$1" | grep -iq "^debug$"
 then
@@ -84,9 +84,9 @@ else
     fi
 fi
 
-echo "${BAR}===============================${BAR}"
-echo "${BAR} 依存パッケージインストール    ${BAR}"
-echo "${BAR}===============================${BAR}"
+echo "${BAR}============================${BAR}"
+echo "${BAR} Installing dependencies    ${BAR}"
+echo "${BAR}============================${BAR}"
 
 if command -v curl > /dev/null
 then
@@ -143,6 +143,6 @@ fi
 install_ctags
 
 # 完了メッセージ
-echo "${BAR}===============================${BAR}"
-echo "${BAR} vim-barebonesインストール完了 ${BAR}"
-echo "${BAR}===============================${BAR}"
+echo "${BAR}=====================================${BAR}"
+echo "${BAR} vim-barebones installation complete ${BAR}"
+echo "${BAR}=====================================${BAR}"

@@ -4,9 +4,9 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
-" asyncomplete.vim (自動補完機能) の設定
-let g:asyncomplete_auto_popup = 0   " タブキーを押していないときに
-                                    " 補完候補を表示させない
+" asyncomplete.vim (code completion)
+let g:asyncomplete_auto_popup = 0   " Show completion options only when tab key
+                                    " is pressed
 
 inoremap <silent><expr> <Tab>
     \ pumvisible() ? "\<C-n>" :

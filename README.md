@@ -1,15 +1,15 @@
 # VIM-barebones
 
-## VIM-barebonesとはなんぞや?
-VIM-barebonesはVimをインターネット環境を使用することができない環境下 \
-でも快適に、生産性が高い理想の開発環境を整える試みである。 \
-外部のプラグインを使用しないことを前提とし、人気のVSCodeや \
-IDE (統合開発環境) に負けない利便性と快適性の両立を目指す。 \
-なお、LSP (Language Server Protocol) 等の便利機能を使用するためにやむなく \
-外部プラグインを導入する場合はプラグイン等が保管される`${HOME}/.vim` \
-ディレクトリをバックアップし、外部での使用を可能とする。
+## What is VIM-barebones?
+VIM-barebones aims for the creation of a coding environment with Vim \
+that does not require internet. \
+Using minimal plugins and match or exceed the usability of popular \
+text editors (such as VSCode) and IDEs (Integrated Development Environment). \
+When adding plugins such as LSPs and code completions to extend the \
+usability of Vim, it must be able to export the plugins and automate the \
+installation process of its dependencies into a single tar.gz file.
 
-vim-barebonesの構造
+File structure of vim-barebones
 ```
 vim
 └── after
@@ -23,32 +23,33 @@ vim
         └── vim_lsp.vim
 ```
 
-## VIM-barebonesの開発
-VIM-barebonesの開発を行う際は`vim-barebones`のDockerfileを用いて行う。 \
-vim-barebonesには必要な最小限のソフトウェアのみがインストールされ、 \
-必要なソフトウェアがある場合インストール用スクリプト`install.sh`に追加し、 \
-Dockerfileに依存ソフトウェアを追加し、更新すること。 \
-なお前提として使用する環境はDebian系 (Debian Buster以降) のLinux \
-ディストリビューションとする。 \
-その他のLinuxディストリビューション (RHEL系、Archlinux系、Gentoo系) \
-を使用する場合、別途個人で依存ソフトウェアのインストールが必要である。 \
-また、本Dockerイメージ (vim-barebones) のブランチは更新日時とする。 \
-    例) 更新日時が2023/01/23の場合、`vim-barebones:20230123`となる
+## The development of VIM-barebones
+When developing VIM-barebones, it is to be developed inside a docker container \
+using the `Dockerfile.vim-barebones` file. \
+Inside the docker container, all of the nesessary dependencies are to be installed \
+and the dependencies must also be added to the installation script `install.sh`. \
+The target distribution are Debian (Debian Buster and later) based distributions. \
+If using other distributions that are based on RHEL, Arch Linux, Gentoo, etc \
+manual installation of dependencies is required. \
+The naming convention for the branch of individual docker images are of below: \
+- e.g. Run `make build-image` at 2023/01/23 &rarr; image name: `vim-barebones:20230123`
 
-## インストール方法
-1. まず、パッケージを展開する必要があるため、以下のコマンドで展開を行う。
+## Installation
+1. Extract the package with the following command
     ``` bash
     tar xzvf vim-barebones-YYYYMMDD.tar.gz
     ```
-2. インストールをする際にはvim-barebones内の`./install`を実行する。
+2. Run the installation script `install.sh` with the following command
     ``` bash
     cd vim-barebones && ./install.sh
     ```
 
-## リリースビルド作成
-VIM-barebonesのリリース用ビルドを作成する場合tar.gz形式でパッケージングを行う。 \
-なお、リリース用ビルドは`make`のオプションとして用意するため、以下のコマンドを \
-実行することでリリース用ビルドを作成することができる。
+## Creating release builds
+Packaging and creation of release builds of VIM-barebones are done in a tar.gz \
+file format. \
+When creating release builds, it is done using Make and can be done with the \
+following command.
+
 ``` bash
 make release
 ```

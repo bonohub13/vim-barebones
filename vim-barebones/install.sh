@@ -143,7 +143,7 @@ fi
 
 install_ctags
 
-# 完了メッセージ
+# Installation completion message
 echo "${BAR}=====================================${BAR}"
 echo "${BAR} vim-barebones installation complete ${BAR}"
 echo "${BAR}=====================================${BAR}"

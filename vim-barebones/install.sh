@@ -117,6 +117,7 @@ else
     [ "${HOME}" = "/root" ] \
         && apt install -y fzf \
         || sudo apt install -y fzf
+fi
 
 if command -v cargo > /dev/null
 then

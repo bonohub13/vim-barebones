@@ -17,7 +17,7 @@ install_ctags() {
     then
         universal_ctags_compat=2
         installed_msg "ctags"
-    elif grep -q "Debian" /etc/os-release
+    elif grep -q -i "debian" /etc/os-release
     then
         # Debian
         if [ `grep "VERSION_ID" /etc/os-release | sed -e "s/.*=//" -e 's/"//g'` -ge 10 ]

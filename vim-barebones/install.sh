@@ -57,9 +57,25 @@ install_ctags() {
 }
 
 plugins() {
-    echo "${BAR}=========================${BAR}"
-    echo "${BAR} ERROR: Function missing ${BAR}"
-    echo "${BAR}=========================${BAR}"
+    echo "${BAR}===============================${BAR}"
+    echo "${BAR}      Installing plugins       ${BAR}"
+    echo "${BAR}===============================${BAR}"
+
+    cat vimrc.plugins | tee -a "${HOME}/.vimrc" > /dev/null
+    find plugins | while read file
+    do
+        if echo "$file" | awk -F/ '{print$NF}' | grep -q "^plugins\.vim$"
+        then
+            cat "$file" \
+                | tee -a "${HOME}/.vim/after/plugin/plugins.vim" > /dev/null
+        else
+            cp -v "$file" "${HOME}/.vim/after/plugin/"
+        fi
+    done
+
+    echo "${BAR}===============================${BAR}"
+    echo "${BAR} Plugin installation completed ${BAR}"
+    echo "${BAR}===============================${BAR}"
 
     return $?
 }
@@ -84,64 +100,69 @@ else
     fi
 fi
 
-echo "${BAR}============================${BAR}"
-echo "${BAR} Installing dependencies    ${BAR}"
-echo "${BAR}============================${BAR}"
-
-if command -v curl > /dev/null
+if echo "$1" | grep -iq "^plugins$"
 then
-    installed_msg "curl"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y curl \
-        || sudo apt install -y curl
+    plugins
 
-    finished_install_msg "curl"
+    echo "${BAR}============================${BAR}"
+    echo "${BAR} Installing dependencies    ${BAR}"
+    echo "${BAR}============================${BAR}"
+
+    if command -v curl > /dev/null
+    then
+        installed_msg "curl"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y curl \
+            || sudo apt install -y curl
+
+        finished_install_msg "curl"
+    fi
+
+    if command -v git > /dev/null
+    then
+        installed_msg "git"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y git \
+            || sudo apt install -y git
+
+        finished_install_msg "git"
+    fi
+
+    if command -v fzf > /dev/null
+    then
+        installed_msg "fzf"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y fzf \
+            || sudo apt install -y fzf
+    fi
+
+    if command -v cargo > /dev/null
+    then
+        installed_msg "cargo"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y cargo \
+            || sudo apt install -y cargo
+
+        finished_install_msg "cargo"
+    fi
+
+    if command -v npm > /dev/null
+    then
+        installed_msg "npm"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y npm \
+            || sudo apt install -y npm
+
+        finished_install_msg "npm"
+    fi
+
+    install_ctags
 fi
-
-if command -v git > /dev/null
-then
-    installed_msg "git"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y git \
-        || sudo apt install -y git
-
-    finished_install_msg "git"
-fi
-
-if command -v fzf > /dev/null
-then
-    installed_msg "fzf"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y fzf \
-        || sudo apt install -y fzf
-fi
-
-if command -v cargo > /dev/null
-then
-    installed_msg "cargo"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y cargo \
-        || sudo apt install -y cargo
-
-    finished_install_msg "cargo"
-fi
-
-if command -v npm > /dev/null
-then
-    installed_msg "npm"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y npm \
-        || sudo apt install -y npm
-
-    finished_install_msg "npm"
-fi
-
-install_ctags
 
 # Installation completion message
 echo "${BAR}=====================================${BAR}"

@@ -10,7 +10,6 @@ nnoremap <Leader>tn     :tabnext<CR>
 nnoremap <Leader>tp     :tabprevious<CR>
 nnoremap <Leader>st     :term<CR>
 nnoremap <Leader>vt     :vert term<CR>
-nnoremap <Leader>ff     :FZF<CR>
 
 "   Keybinds for insert mode
 inoremap [              []<left>

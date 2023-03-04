@@ -144,7 +144,7 @@ then
         installed_msg "cargo"
     else
         [ "${HOME}" = "/root" ] \
-            && apt isntall -y cargo \
+            && apt install -y cargo \
             || sudo apt install -y cargo
 
         finished_install_msg "cargo"
@@ -155,7 +155,7 @@ then
         installed_msg "npm"
     else
         [ "${HOME}" = "/root" ] \
-            && apt isntall -y npm \
+            && apt install -y npm \
             || sudo apt install -y npm
 
         finished_install_msg "npm"

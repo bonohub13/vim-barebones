@@ -40,9 +40,14 @@ The naming convention for the branch of individual docker images are of below: \
     tar xzvf vim-barebones-YYYYMMDD.tar.gz
     ```
 2. Run the installation script `install.sh` with the following command
-    ``` bash
-    cd vim-barebones && ./install.sh
-    ```
+    - Default
+        ``` bash
+        cd vim-barebones && ./install.sh
+        ```
+    - Install with plugins
+        ``` bash
+        cd vim-barebones && ./install.sh plugins
+        ```
 
 ## Creating release builds
 Packaging and creation of release builds of VIM-barebones are done in a tar.gz \

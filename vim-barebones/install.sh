@@ -100,68 +100,68 @@ else
     fi
 fi
 
-echo "${BAR}===============================${BAR}"
-echo "${BAR} 依存パッケージインストール    ${BAR}"
-echo "${BAR}===============================${BAR}"
-
-if command -v curl > /dev/null
-then
-    installed_msg "curl"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y curl \
-        || sudo apt install -y curl
-
-    finished_install_msg "curl"
-fi
-
-if command -v git > /dev/null
-then
-    installed_msg "git"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y git \
-        || sudo apt install -y git
-
-    finished_install_msg "git"
-fi
-
-if command -v fzf > /dev/null
-then
-    installed_msg "fzf"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt install -y fzf \
-        || sudo apt install -y fzf
-fi
-
-if command -v cargo > /dev/null
-then
-    installed_msg "cargo"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt isntall -y cargo \
-        || sudo apt install -y cargo
-
-    finished_install_msg "cargo"
-fi
-
-if command -v npm > /dev/null
-then
-    installed_msg "npm"
-else
-    [ "${HOME}" = "/root" ] \
-        && apt isntall -y npm \
-        || sudo apt install -y npm
-
-    finished_install_msg "npm"
-fi
-
-install_ctags
-
 if echo "$1" | grep -iq "^plugins$"
-    plugins
 then
+    plugins
+
+    echo "${BAR}========================================${BAR}"
+    echo "${BAR} プラグイン用依存パッケージインストール ${BAR}"
+    echo "${BAR}========================================${BAR}"
+
+    if command -v curl > /dev/null
+    then
+        installed_msg "curl"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y curl \
+            || sudo apt install -y curl
+
+        finished_install_msg "curl"
+    fi
+
+    if command -v git > /dev/null
+    then
+        installed_msg "git"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y git \
+            || sudo apt install -y git
+
+        finished_install_msg "git"
+    fi
+
+    if command -v fzf > /dev/null
+    then
+        installed_msg "fzf"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt install -y fzf \
+            || sudo apt install -y fzf
+    fi
+
+    if command -v cargo > /dev/null
+    then
+        installed_msg "cargo"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt isntall -y cargo \
+            || sudo apt install -y cargo
+
+        finished_install_msg "cargo"
+    fi
+
+    if command -v npm > /dev/null
+    then
+        installed_msg "npm"
+    else
+        [ "${HOME}" = "/root" ] \
+            && apt isntall -y npm \
+            || sudo apt install -y npm
+
+        finished_install_msg "npm"
+    fi
+
+    install_ctags
 fi
 
 # 完了メッセージ

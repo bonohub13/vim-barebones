@@ -1,3 +1,7 @@
+" カスタムコマンド一覧: ~/.vim/after/plugin/commands.vim
+" 自動実行コマンド一覧: ~/.vim/after/plugin/autocommands.vim
+" 各種キーバインド一覧: ~/.vim/after/plugin/keybinds.vim
+
 " 色の設定
 syntax enable
 colorscheme desert
@@ -66,56 +70,3 @@ let mapleader=' '             " スペースキーを<Leader>キーとしてマ�
                                 " しているが、好きなものへ再マッピングしてもOK!
                                 " しかし、アルファベットや:,/,?等の
                                 " ノーマルモード時に使用するものは禁止
-
-" プラグインマネジャの自動ダウンロード
-"   ダウンロード先のパス
-let plug_path=has('nvim') ? stdpath('data') . '/autoload/plug.vim'
-    \ : $HOME . '/.vim/autoload/plug.vim'
-echo plug_path
-"   ファイルが存在しない場合、ダウンロードする
-if empty(glob(plug_path))
-    call system(
-        \ 'curl' . 
-        \ ' -fLo ' . plug_path .
-        \ ' --create-dirs' . 
-        \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        \ )
-endif
-" プラグインインストール (ここは必ず.vimrcファイル内になければならない)
-" プラグインがロードされない
-call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plugged')
-    " Tagbar (変数・関数・クラスオブジェクト等の表示)
-    Plug 'preservim/tagbar'
-
-    " LSP
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
-
-    " 自動補完機能
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-    " ステータスバーに表示する情報追加
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-
-    " ファジーファインダー (fzf)
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-call plug#end()
-
-" PlugInstallコマンド実行していない環境下での初期動作
-"   PlugInstallコマンドを実行し、プラグインをインストールする
-function! s:plug_install_on_initial_launch()
-    let dir=has('nvim') ? stdpath('data') . '/plugged' : $HOME . '/.vim/plugged'
-
-    if !isdirectory(dir)
-        call execute('PlugInstall')
-    endif
-endfunction
-
-call s:plug_install_on_initial_launch()
-
-" カスタムコマンド一覧: ~/.vim/after/plugin/commands.vim
-" 自動実行コマンド一覧: ~/.vim/after/plugin/autocommands.vim
-" 各種キーバインド一覧: ~/.vim/after/plugin/keybinds.vim

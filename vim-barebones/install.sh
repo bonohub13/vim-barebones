@@ -57,9 +57,25 @@ install_ctags() {
 }
 
 plugins() {
-    echo "${BAR}===============================${BAR}"
-    echo "== ERROR: この機能はまだ実装されていません =="
-    echo "${BAR}===============================${BAR}"
+    echo "${BAR}==============================${BAR}"
+    echo "${BAR}  プラグイン用のパッチ適用中  ${BAR}"
+    echo "${BAR}==============================${BAR}"
+
+    cat vimrc.plugins | tee -a "${HOME}/.vimrc" > /dev/null
+    find plugins | while read file
+    do
+        if echo "$file" | awk -F/ '{print$NF}' | grep -q "^plugins\.vim$"
+        then
+            cat "$file" \
+                | tee -a "${HOME}/.vim/after/plugin/plugins.vim" > /dev/null
+        else
+            cp -v "$file" "${HOME}/.vim/after/plugin/"
+        fi
+    done
+
+    echo "${BAR}==============================${BAR}"
+    echo "${BAR} プラグイン用のパッチ適用完了 ${BAR}"
+    echo "${BAR}==============================${BAR}"
 
     return $?
 }
@@ -142,6 +158,11 @@ else
 fi
 
 install_ctags
+
+if echo "$1" | grep -iq "^plugins$"
+    plugins
+then
+fi
 
 # 完了メッセージ
 echo "${BAR}===============================${BAR}"

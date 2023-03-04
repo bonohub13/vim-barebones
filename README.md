@@ -41,9 +41,14 @@ Dockerfileに依存ソフトウェアを追加し、更新すること。 \
     tar xzvf vim-barebones-YYYYMMDD.tar.gz
     ```
 2. インストールをする際にはvim-barebones内の`./install`を実行する。
-    ``` bash
-    cd vim-barebones && ./install.sh
-    ```
+    - デフォルト
+        ``` bash
+        cd vim-barebones && ./install.sh
+        ```
+    - プラグイン追加
+        ```bash
+        cd vim-barebones && ./install.sh plugin
+        ```
 
 ## リリースビルド作成
 VIM-barebonesのリリース用ビルドを作成する場合tar.gz形式でパッケージングを行う。 \

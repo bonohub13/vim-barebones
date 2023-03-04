@@ -47,7 +47,7 @@ Dockerfileに依存ソフトウェアを追加し、更新すること。 \
         ```
     - プラグイン追加
         ```bash
-        cd vim-barebones && ./install.sh plugin
+        cd vim-barebones && ./install.sh plugins
         ```
 
 ## リリースビルド作成

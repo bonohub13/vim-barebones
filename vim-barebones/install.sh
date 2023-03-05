@@ -64,13 +64,7 @@ plugins() {
     cat vimrc.plugins | tee -a "${HOME}/.vimrc" > /dev/null
     find plugins -type f | while read file
     do
-        if echo "$file" | awk -F/ '{print$NF}' | grep -q "^keybinds\.vim$"
-        then
-            cat "$file" \
-                | tee -a "${HOME}/.vim/after/plugin/keybinds.vim" > /dev/null
-        else
-            cp -v "$file" "${HOME}/.vim/after/plugin/"
-        fi
+        cp -v "$file" "${HOME}/.vim/after/plugin/"
     done
 
     echo "${BAR}==============================${BAR}"

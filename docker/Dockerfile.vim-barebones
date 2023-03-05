@@ -5,39 +5,13 @@ RUN apt-get install -y \
     apt-utils \
     vim
 
-# プラグイン依存パッケージインストール
-RUN apt-get install -y \
-    curl \
-    git \
-    universal-ctags \
-    fzf
-
 # C/C++のLSPを使うためのもの (必須ではない)
 RUN apt-get install -y \
     clangd-11
 
-# vimscriptのLSPを使うためのもの (必須ではない)
-RUN apt-get install -y \
-    cargo \
-    npm
-
-# RUN useradd -m -s /bin/bash -d /home/vimuser vimuser
-# RUN echo "vimuser:vim" | chpasswd
-# RUN adduser vimuser sudo
-# RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-# USER vimuser
-
-# ここ以降は必ず最後に実行
-# ADD vim-barebones /home/vimuser/vim-barebones
-# WORKDIR /home/vimuser/vim-barebones
 ADD vim-barebones /root/vim-barebones
 WORKDIR /root/vim-barebones
 RUN ./install.sh
-# WORKDIR /home/vimuser
 WORKDIR /root
 
-# USER root
-# RUN rm -rf /home/vimuser/vim-barebones
 RUN rm -rf /root/vim-barebones
-
-# USER vimuser

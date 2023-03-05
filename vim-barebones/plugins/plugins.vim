@@ -14,3 +14,6 @@ augroup AutoTagbar
     autocmd!
     autocmd VimEnter,TabNew * nested :TagbarOpen
 augroup END
+
+"   FZF用のショーカットキー
+nnoremap <Leader>ff     :FZF<CR>

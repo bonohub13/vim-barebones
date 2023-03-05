@@ -62,7 +62,7 @@ plugins() {
     echo "${BAR}===============================${BAR}"
 
     cat vimrc.plugins | tee -a "${HOME}/.vimrc" > /dev/null
-    find plugins | while read file
+    find plugins -type f | while read file
     do
         if echo "$file" | awk -F/ '{print$NF}' | grep -q "^plugins\.vim$"
         then

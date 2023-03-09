@@ -5,26 +5,14 @@ RUN apt-get install -y \
     apt-utils \
     vim
 
-# Install dependencies for plugins
-RUN apt-get install -y \
-    curl \
-    git \
-    universal-ctags \
-    fzf
-
 # Install dependencies for LSP (Only for testing)
 RUN apt-get install -y \
     clangd-11
 
-# Install dependencies for LSP
-RUN apt-get install -y \
-    cargo \
-    npm
-
 # Run the following lines last
 ADD vim-barebones /root/vim-barebones
 WORKDIR /root/vim-barebones
-RUN ./install.sh
+RUN ./install.sh plugins
 WORKDIR /root
 
 RUN rm -rf /root/vim-barebones

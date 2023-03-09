@@ -10,7 +10,7 @@ RUN apt-get install -y \
     clangd-11
 
 ADD vim-barebones /root/vim-barebones
-WORKDIR /root/vim-barebones
+WORKDIR /root/vim-barebones plugins
 RUN ./install.sh
 WORKDIR /root
 

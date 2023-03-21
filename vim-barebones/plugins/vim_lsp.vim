@@ -5,7 +5,7 @@
 "       cmd: Command to run (Most of the time, it is same as lspname)
 function! EnableLSP(lspname, languanges, cmd)
     if executable(a:lspname)
-        au User lsp_setup call lsp#register_server({
+        call lsp#register_server({
             \ 'name': a:lspname,
             \ 'cmd': {server_info->[a:cmd]},
             \ 'allowlist': a:languages,
@@ -51,18 +51,21 @@ set foldmethod=expr
 "     \   'clangd-11'
 "     \ )
 
-call EnableLSP('vim-language-server', 
-    \   ['vim'],
-    \   'vim-language-server'
-    \ )
-call EnableLSP('bash-language-server', 
-    \   ['bash', 'sh', 'shellscript'], 
-    \   'bash-language-server'
-    \ )
-call EnableLSP('clangd',
-    \   ['c', 'cpp'],
-    \   'clangd'
-    \ )
+augroup VimLspSetup
+    au!
+    au User lsp_setup call EnableLSP('vim-language-server', 
+        \   ['vim'],
+        \   'vim-language-server'
+        \ )
+    au User lsp_setup call EnableLSP('bash-language-server', 
+        \   ['bash', 'sh', 'shellscript'], 
+        \   'bash-language-server'
+        \ )
+    au User lsp_setup call EnableLSP('clangd',
+        \   ['c', 'cpp'],
+        \   'clangd'
+        \ )
+augroup END
 
 augroup lsp_install
     au!

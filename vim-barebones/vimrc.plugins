@@ -2,7 +2,6 @@
 " Automatic installation of plugin manager (vim-plug)
 let plug_path=has('nvim') ? stdpath('data') . '/autoload/plug.vim'
     \ : $HOME . '/.vim/autoload/plug.vim'
-echo plug_path
 "   If vim-plug doesn't exist, download vim-plug
 if empty(glob(plug_path))
     call system(

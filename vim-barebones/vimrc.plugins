@@ -3,7 +3,6 @@
 "   ダウンロード先のパス
 let plug_path=has('nvim') ? stdpath('data') . '/autoload/plug.vim'
     \ : $HOME . '/.vim/autoload/plug.vim'
-echo plug_path
 "   ファイルが存在しない場合、ダウンロードする
 if empty(glob(plug_path))
     call system(

@@ -3,7 +3,7 @@
 "       lspname: LSPの名前
 "       language: 言語 (プログラミング言語)
 "       cmd: LSPを行うソフトウェア (ほとんどの場合、lspnameと同じ)
-function! EnableLSP(lspname, languanges, cmd)
+function! EnableLSP(lspname, languages, cmd)
     if executable(a:lspname)
         call lsp#register_server({
             \ 'name': a:lspname,

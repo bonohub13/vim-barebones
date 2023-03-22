@@ -3,7 +3,7 @@
 "       lspname: Name of LSP
 "       language: List of programming languages
 "       cmd: Command to run (Most of the time, it is same as lspname)
-function! EnableLSP(lspname, languanges, cmd)
+function! EnableLSP(lspname, languages, cmd)
     if executable(a:lspname)
         call lsp#register_server({
             \ 'name': a:lspname,

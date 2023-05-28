@@ -12,19 +12,10 @@
 "         └── vim_lsp.vim
 
 " Color settings
+set t_Co=256
 syntax enable
 colorscheme desert
-highlight Normal    guibg=NONE ctermbg=NONE
-highlight NonText   guibg=NONE ctermbg=NONE
 set termguicolors
-
-" Cursor visualization
-"   SI = Insert mode
-"   SR = Substitution mode
-"   EI = Normal mode
-let &t_SI.="\e[1 q"
-let &t_SR.="\e[3 q"
-let &t_EI.="\e[2 q"
 
 " Indent related
 set autoindent

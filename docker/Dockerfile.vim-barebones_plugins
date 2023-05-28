@@ -5,9 +5,13 @@ RUN apt-get install -y \
     apt-utils \
     vim
 
+# C/C++のLSPを使うためのもの (必須ではない)
+RUN apt-get install -y \
+    clangd-11
+
 ADD vim-barebones /root/vim-barebones
 WORKDIR /root/vim-barebones
-RUN ./install.sh
+RUN ./install.sh plugins
 WORKDIR /root
 
 RUN rm -rf /root/vim-barebones

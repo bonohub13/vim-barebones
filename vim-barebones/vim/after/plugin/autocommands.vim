@@ -5,10 +5,11 @@ augroup SourceVimrc
     autocmd BufWritePost *vimrc,vim source $MYVIMRC | set foldmethod=marker
 augroup END
 
-"   HTML/XMLタグ自動挿入
-augroup MarkupLang
+"   括弧・クオートの自動閉じ
+augroup CloseBracketOrQuote
     autocmd!
     autocmd FileType lua,vim,html,xml inoremap <buffer> < <><left>
+    autocmd FileType * if &ft != 'rust' | inoremap <buffer> ' ''<left>| endif
 augroup END
 
 "   言語を日本語に設定

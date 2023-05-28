@@ -3,9 +3,9 @@
 "       lspname: LSPの名前
 "       language: 言語 (プログラミング言語)
 "       cmd: LSPを行うソフトウェア (ほとんどの場合、lspnameと同じ)
-function! EnableLSP(lspname, languages, cmd)
+function! EnableLSP(lspname, languanges, cmd)
     if executable(a:lspname)
-        call lsp#register_server({
+        au User lsp_setup call lsp#register_server({
             \ 'name': a:lspname,
             \ 'cmd': {server_info->[a:cmd]},
             \ 'allowlist': a:languages,
@@ -51,20 +51,18 @@ set foldmethod=expr
 "     \   'clangd-11'
 "     \ )
 
-augroup VimLspSetup
-    au User lsp_setup call EnableLSP('vim-language-server', 
-        \   ['vim'],
-        \   'vim-language-server'
-        \ )
-    au User lsp_setup call EnableLSP('bash-language-server', 
-        \   ['bash', 'sh', 'shellscript'], 
-        \   'bash-language-server'
-        \ )
-    au User lsp_setup call EnableLSP('clangd',
-        \   ['c', 'cpp'],
-        \   'clangd'
-        \ )
-augroup END
+call EnableLSP('vim-language-server', 
+    \   ['vim'],
+    \   'vim-language-server'
+    \ )
+call EnableLSP('bash-language-server', 
+    \   ['bash', 'sh', 'shellscript'], 
+    \   'bash-language-server'
+    \ )
+call EnableLSP('clangd',
+    \   ['c', 'cpp'],
+    \   'clangd'
+    \ )
 
 augroup lsp_install
     au!

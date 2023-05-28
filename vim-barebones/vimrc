@@ -2,20 +2,13 @@
 " 自動実行コマンド一覧: ~/.vim/after/plugin/autocommands.vim
 " 各種キーバインド一覧: ~/.vim/after/plugin/keybinds.vim
 
+let $RTP=split(&runtimepath, ',')[0]
+
 " 色の設定
+set t_Co=256
 syntax enable
 colorscheme desert
-highlight Normal    guibg=NONE ctermbg=NONE
-highlight NonText   guibg=NONE ctermbg=NONE
 set termguicolors
-
-" カーソルの表示
-"   SI = 挿入モード
-"   SR = 置き換えモード
-"   EI = ノーマルモード
-let &t_SI.="\e[1 q"
-let &t_SR.="\e[3 q"
-let &t_EI.="\e[2 q"
 
 " インデント
 set autoindent
